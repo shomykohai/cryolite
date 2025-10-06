@@ -1,0 +1,17 @@
+These are my nixos dotfiles.
+
+They're a bit messy for now, but improvements are to come
+
+## Some style guides
+
+Avoid with!!
+https://nix.dev/guides/best-practices#with-scopes
+
+Avoid (at all costs) home manager for speed points
+
+When possible, avoid adding more inputs
+
+# License
+
+Licensed under the GPLv3-or-later license, see [LICENSE](LICENSE) for more details.
+
