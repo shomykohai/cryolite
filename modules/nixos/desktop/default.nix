@@ -19,11 +19,11 @@ in {
   };
 
   config = lib.mkIf (de != "none") {
-#    nixpkgs.overlays = [
-#      (final: prev: {
-#        kdePackages = pkgsUnstable.kdePackages;
-#      })
-#    ];
+    #nixpkgs.overlays = [
+    #  (final: prev: {
+    #    kdePackages = pkgsUnstable.kdePackages;
+    #  })
+    #];
 
     services.xserver.enable = false;
 
