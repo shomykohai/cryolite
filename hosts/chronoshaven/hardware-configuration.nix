@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }: {
@@ -15,8 +14,41 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc"];
   boot.initrd.kernelModules = [];
+  boot.initrd.systemd.tpm2.enable = true;
+  security.tpm2.enable = true;
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
+
+  staypls = {
+    enable = true;
+    dirs = [
+      "/etc/nixos"
+      "/etc/ssh"
+      "/etc/NetworkManager"
+      "/var/log"
+      "/var/lib"
+      "/usr/systemd-placeholder"
+    ];
+  };
+
+  boot.initrd.luks.devices = {
+    nix = {
+      device = "/dev/disk/by-uuid/0594bb28-a049-4fd9-a13a-f0bc5d81317f";
+      # fallbackToPassword = true;
+    };
+    home = {
+      device = "/dev/disk/by-uuid/c586a534-2298-455a-8df1-3e4d8520b77e";
+      # fallbackToPassword = true;
+    };
+    workspace = {
+      device = "/dev/disk/by-uuid/c2944b79-908d-4293-afb9-367e60320c1f";
+      # fallbackToPassword = true;
+    };
+    cryolite = {
+      device = "/dev/disk/by-uuid/11f3cce8-21ba-4ae5-9b36-d362af41dfc1";
+      # fallbackToPassword = true;
+    };
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/c80eb4b9-8422-4c3a-8036-f2f83e31ebd9";
@@ -28,6 +60,45 @@
     device = "/dev/disk/by-uuid/2154-FCDC";
     fsType = "vfat";
     options = ["fmask=0077" "dmask=0077"];
+  };
+
+  fileSystems."/nix" = {
+    neededForBoot = true;
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@nix" "compress=zstd" "x-gvfs-hide"];
+  };
+
+  fileSystems."/persist" = {
+    neededForBoot = true;
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@persist" "compress=zstd" "x-gvfs-hide"];
+  };
+
+  fileSystems."/tmp" = {
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@tmp" "x-gvfs-hide"];
+  };
+
+  fileSystems."/home" = {
+    neededForBoot = true;
+    device = "/dev/mapper/home";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@home" "compress=zstd" "x-gvfs-hide"];
+  };
+
+  fileSystems."/etc/cryolite" = {
+    device = "/dev/mapper/cryolite";
+    fsType = "ext4";
+    options = ["noatime" "x-gvfs-hide"];
+  };
+
+  fileSystems."/usr" = {
+    device = "/persist/usr";
+    fsType = "none";
+    options = ["bind" "X-fstrim.notrim" "x-gvfs-hide"];
   };
 
   swapDevices = [];
