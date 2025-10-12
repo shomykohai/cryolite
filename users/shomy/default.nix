@@ -8,6 +8,7 @@
   users.users.shomy = {
     homix = true; # Enable homix
     isNormalUser = true;
+    hashedPasswordFile = "/persist/secrets/shomy";
     description = "Shomy";
     extraGroups = [
       "networkmanager"
