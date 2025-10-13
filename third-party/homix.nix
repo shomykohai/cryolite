@@ -90,7 +90,7 @@ in {
         ${
           if f.copy
           then ''
-            cp ${f.source} "$FILE"
+            cp -f ${f.source} "$FILE"
           ''
           else ''ln -sf ${f.source} "$FILE"''
         }
