@@ -10,6 +10,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./nvidia.nix
+    ../../third-party/staypls.nix
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc"];
@@ -33,31 +34,31 @@
 
   boot.initrd.luks.devices = {
     nix = {
-      device = "/dev/disk/by-uuid/0594bb28-a049-4fd9-a13a-f0bc5d81317f";
+      device = "/dev/disk/by-label/NIXROOT";
       # fallbackToPassword = true;
     };
     home = {
-      device = "/dev/disk/by-uuid/c586a534-2298-455a-8df1-3e4d8520b77e";
+      device = "/dev/disk/by-label/NIXHOME";
       # fallbackToPassword = true;
     };
     workspace = {
-      device = "/dev/disk/by-uuid/c2944b79-908d-4293-afb9-367e60320c1f";
+      device = "/dev/disk/by-label/WORKSPACE";
       # fallbackToPassword = true;
     };
     cryolite = {
-      device = "/dev/disk/by-uuid/11f3cce8-21ba-4ae5-9b36-d362af41dfc1";
+      device = "/dev/disk/by-label/CRYOLITE";
       # fallbackToPassword = true;
     };
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c80eb4b9-8422-4c3a-8036-f2f83e31ebd9";
-    fsType = "btrfs";
-    options = ["subvol=@"];
+    device = "none";
+    fsType = "tmpfs";
+    options = ["size=1G" "mode=755"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2154-FCDC";
+    device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
     options = ["fmask=0077" "dmask=0077"];
   };
