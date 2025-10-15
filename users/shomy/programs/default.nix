@@ -1,4 +1,8 @@
-{pkgs, frostix, ...}: {
+{
+  pkgs,
+  frostix,
+  ...
+}: {
   imports = [
     ./zsh.nix
     ./codium.nix
@@ -9,6 +13,7 @@
     ./obs.nix
     ./syncthing.nix
     ./thunderbird
+    ./zed.nix
   ];
 
   users.users.shomy.packages = [
