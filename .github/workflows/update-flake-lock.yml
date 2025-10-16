@@ -1,0 +1,58 @@
+name: Update Flake Inputs
+
+on:
+  schedule:
+    - cron: '0 5 * * 0'
+  workflow_dispatch:
+
+jobs:
+  update-flake-inputs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v26
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Determine inputs
+        id: filter-inputs
+        run: |
+          echo "Getting flake inputs..."
+          ALL_INPUTS=$(nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[]')
+
+          IGNORE_INPUTS="secrets-flake"
+
+          TO_UPDATE=()
+          for input in $ALL_INPUTS; do
+            if echo "$IGNORE_INPUTS" | grep -wq "$input"; then
+              echo "Ignoring input: $input"
+            else
+              TO_UPDATE+=("$input")
+            fi
+          done
+
+          echo "TO_UPDATE=${TO_UPDATE[*]}" >> $GITHUB_ENV
+
+      - name: Update inputs
+        run: |
+          for input in $TO_UPDATE; do
+            nix flake update "$input"
+          done
+
+      - name: Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet flake.lock; then
+            echo "No changes to flake.lock"
+          else
+            git add flake.lock
+            git commit -m "flake: Update flake inputs"
+            git push
+          fi
