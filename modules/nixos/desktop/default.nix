@@ -2,6 +2,7 @@
   config,
   lib,
   pkgsUnstable,
+  inputs,
   ...
 }: let
   toLower = lib.strings.toLower;
@@ -36,6 +37,17 @@ in {
       enable = true;
       wayland.enable = true;
     };
+
+    # Packages based on desktop environment
+    environment.systemPackages =
+      [
+      ]
+      ++ lib.optionals isKDE [
+        inputs.darkly.packages.x86_64-linux.darkly-qt5
+        inputs.darkly.packages.x86_64-linux.darkly-qt6
+      ]
+      ++ lib.optionals isGnome [
+      ];
 
     services.xserver.displayManager.gdm.enable = lib.mkDefault isGnome;
   };
