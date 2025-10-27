@@ -1,11 +1,8 @@
 {...}: {
   imports = [
     ./syncthing.nix
+    ./udev.nix
   ];
-
-  services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="2000", MODE="0660", GROUP="dialout"
-  '';
 
   services.envfs.enable = true;
   services.btrfs.autoScrub.enable = true;
