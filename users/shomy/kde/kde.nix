@@ -64,21 +64,22 @@ in {
     ".config/plasmarc" = {
       text = ''
         [Theme]
-        name=WhiteSur-dark
+        name=rose-pine-moonlight
       '';
       copy = true;
     };
 
     ".config/kdeglobals" = {
       text = ''
+        [General]
+        ColorScheme[$i]=RosPineMoonlight
+
         [Icons]
-        Theme=WhiteSur
+        Theme[$i]=WhiteSur-dark
 
         [KDE]
         widgetStyle[$i]=Darkly
 
-        [General]
-        ColorScheme=WhiteSurDark
       '';
       copy = true;
     };

@@ -1,13 +1,11 @@
 {
   pkgs,
+  pkgsUnstable,
   frostix,
   inputs,
   ...
 }: {
   users.users.shomy.packages = with pkgs; [
-    inputs.darkly.packages.x86_64-linux.darkly-qt5
-    inputs.darkly.packages.x86_64-linux.darkly-qt6
-
     kdePackages.plasma-integration # Needed for some KDE apps to use Darkly correctly
     kdePackages.bluez-qt
     kdePackages.kde-gtk-config

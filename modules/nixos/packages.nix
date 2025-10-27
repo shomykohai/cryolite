@@ -76,6 +76,7 @@
     })
     whitesur-cursors
     frostix.kde-plasma-flex-hub
+    frostix.rose-pine-moonlight-kde
 
     # Art
 #    aseprite
