@@ -93,5 +93,13 @@ in {
       '';
       copy = true;
     };
+
+    ".config/darklyrc" = {
+      text = ''
+        [Windeco]
+        TitleAlignment=AlignCenter
+      '';
+      copy = true;
+    };
   };
 }
