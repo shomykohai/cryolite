@@ -54,7 +54,7 @@
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
-    options = ["size=1G" "mode=755"];
+    options = ["size=512M" "mode=755"];
   };
 
   fileSystems."/boot" = {
