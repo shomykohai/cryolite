@@ -48,7 +48,6 @@
     rar
     zip
 
-
     #TODO: USE UNSTABLE ONCE IT IS FIXED
     aseprite
     # Core System
@@ -69,17 +68,9 @@
 
     # kdePackages.kcoreaddons
     # KDE Theme
-    whitesur-kde
-    (whitesur-icon-theme.override {
-      alternativeIcons = true;
-      boldPanelIcons = true;
-    })
-    whitesur-cursors
-    frostix.kde-plasma-flex-hub
-    frostix.rose-pine-moonlight-kde
 
     # Art
-#    aseprite
+    #    aseprite
 
     # Notes
     obsidian

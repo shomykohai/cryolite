@@ -2,6 +2,8 @@
   config,
   lib,
   pkgsUnstable,
+  pkgs,
+  frostix,
   inputs,
   ...
 }: let
@@ -43,8 +45,19 @@ in {
       [
       ]
       ++ lib.optionals isKDE [
-        inputs.darkly.packages.x86_64-linux.darkly-qt5
-        inputs.darkly.packages.x86_64-linux.darkly-qt6
+        frostix.rose-pine-moonlight-kde
+        (pkgsUnstable.whitesur-icon-theme.override {
+          alternativeIcons = true;
+          boldPanelIcons = true;
+        })
+        pkgsUnstable.whitesur-kde
+        pkgsUnstable.whitesur-cursors
+        frostix.kde-plasma-flex-hub
+
+        (pkgsUnstable.darkly.override {
+          qtPackages = pkgs.kdePackages;
+        })
+        pkgsUnstable.darkly-qt5
       ]
       ++ lib.optionals isGnome [
       ];

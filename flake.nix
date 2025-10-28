@@ -64,11 +64,6 @@
     #   inputs.home-manager.follows = "home-manager";
     # };
 
-    darkly = {
-      url = "github:Bali10050/Darkly/feature"; # Darkly(6.2) branch
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
-
     # Third party repos
     frostix = {
       url = "github:shomykohai/frostix";
