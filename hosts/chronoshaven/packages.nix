@@ -11,6 +11,7 @@
     frostix.dex2jar
     jadx
     android-studio
+    musescore
   ];
 
   # Up to date packages
