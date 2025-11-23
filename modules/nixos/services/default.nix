@@ -2,6 +2,7 @@
   imports = [
     ./syncthing.nix
     ./udev.nix
+    ./qemu.nix
   ];
 
   services.envfs.enable = true;
