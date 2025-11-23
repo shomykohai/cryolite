@@ -102,6 +102,19 @@
     options = ["bind" "X-fstrim.notrim" "x-gvfs-hide"];
   };
 
+  fileSystems."/run/win" = {
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = [
+      "subvol=@win"
+      "noatime"
+      "compress=zstd"
+      "discard"
+    ];
+    depends = ["/run"];
+    neededForBoot = false;
+  };
+
   swapDevices = [
     {
       device = "/dev/disk/by-uuid/f326bebf-4ecc-4b36-a050-3ed1e4786078";

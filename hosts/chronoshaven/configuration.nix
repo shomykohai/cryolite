@@ -27,6 +27,7 @@
   # so, force it back just for this host (I should get a better unit)
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_12;
   system.desktopEnvironment = "KDE";
+  services.qemu.enable = true;
 
   ## TODO: Put in a more secure place
   secrets.ageKeyPath = "/home/shomy/.config/sops/age/keys.txt";
