@@ -59,7 +59,7 @@
   # Up to date packages
   unstablePackages = with pkgsUnstable; [
     godot
-    github-desktop
+    frostix.github-desktop-plus
     jdk8
     # Android development & research
     frostix.mtkclient-git
@@ -97,6 +97,10 @@ in
     programs.adb.enable = true;
 
     # Allow unfree packages
+
+    xdg.portal.extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
 
     # Combine both lists for systemPackages
     environment.systemPackages = stablePackages ++ unstablePackages;
