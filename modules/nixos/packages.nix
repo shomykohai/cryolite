@@ -13,7 +13,6 @@
 
     # Development tools
     python3
-    wireshark
     imhex
 
     # Various stuff
@@ -95,6 +94,11 @@ in
     # Needed by mtkclient since udev rules are following the adbusers group
     # Also, adb stuff and android tools
     programs.adb.enable = true;
+    programs.wireshark = {
+      enable = true;
+      usbmon.enable = true;
+      package = pkgsUnstable.wireshark;
+    };
 
     # Allow unfree packages
 
