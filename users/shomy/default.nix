@@ -17,6 +17,8 @@
       "adbusers"
       "scanner"
       "lp"
+      "libvirtd"
+      "wireshark"
     ];
 
     useDefaultShell = true;
