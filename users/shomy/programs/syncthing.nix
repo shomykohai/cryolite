@@ -23,6 +23,7 @@
     settings = {
       devices = {
         aristotledenial.id = getSecret "syncthing.devices.aristotledenial";
+        anamnesis.id = getSecret "syncthing.devices.anamnesis";
       };
       folders = {
         "obsidian-vault" = {
