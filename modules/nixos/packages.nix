@@ -100,6 +100,10 @@ in
       package = pkgsUnstable.wireshark;
     };
 
+    programs.git = {
+      enable = true;
+      lfs.enable = true;
+    };
     # Allow unfree packages
 
     xdg.portal.extraPortals = [
