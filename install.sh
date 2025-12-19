@@ -95,7 +95,7 @@ EOF
 # Password handling because I forgot too many times
 PERSIST_DIR="$MOUNT_POINT/persist"
 
-users_json=$(nix eval --json ".#nixosConfigurations.${HOST_NAME}.config.users.users")
+users_json=$(nix --extra-experimental-features 'nix-command flakes pipe-operators' eval --json ".#nixosConfigurations.${HOST_NAME}.config.users.users")
 
 for user_path in ./users/*; do
     user_name=$(basename "$user_path")
