@@ -3,7 +3,7 @@
 
   homix.".config/ghostty/config" = {
     text = ''
-      theme = rose-pine-moon
+      theme = "Rose Pine Moon"
       shell-integration = zsh
 
       bold-is-bright = "true"
