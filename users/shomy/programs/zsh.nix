@@ -12,7 +12,7 @@
 
     shellAliases = {
       ll = "ls -l";
-      update = "sudo nixos-rebuild switch --flake $HOME/.dotfiles#$(hostname)";
+      update = "sudo nixos-rebuild switch --flake /etc/cryolite/cryolite#$(hostname) --override-input secrets-flake /etc/cryolite/cryolite/secrets";
       py-venv = "python -m venv .venv && source .venv/bin/activate";
       ws = "cd ~/workspace";
       nd = "nix develop";
