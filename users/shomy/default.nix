@@ -4,6 +4,7 @@
     ./kde/kde.nix
 
     ./programs
+    ./ssh.nix
   ];
   users.users.shomy = {
     homix = true; # Enable homix
