@@ -91,6 +91,7 @@ in {
           if f.copy
           then ''
             cp -f ${f.source} "$FILE"
+            chown "$USER" "$FILE"
           ''
           else ''ln -sf ${f.source} "$FILE"''
         }
@@ -114,6 +115,7 @@ in {
         environment = {
           # epic systemd momento
           HOME = config.users.users.${user}.home;
+          USER = user;
         };
       };
     };
