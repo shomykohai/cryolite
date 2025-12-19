@@ -11,11 +11,14 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ../../third-party/staypls.nix
   ];
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
   boot.blacklistedKernelModules = ["k10temp"];
   # boot.initrd.kernelModules = ["amdgpu"]; # This broke everything
+  boot.initrd.systemd.tpm2.enable = true;
+  security.tpm2.enable = true;
   boot.kernelModules = ["kvm-amd" "zenpower"];
   boot.extraModulePackages = [config.boot.kernelPackages.zenpower];
   boot.kernelParams = [
@@ -26,7 +29,7 @@
   hardware.graphics = {
     enable = lib.mkDefault true;
     enable32Bit = lib.mkDefault true;
-    extraPackages = [pkgs.amdvlk pkgs.rocmPackages.clr.icd];
+    extraPackages = [pkgs.rocmPackages.clr.icd];
   };
 
   environment.variables = {
@@ -35,16 +38,82 @@
 
   services.xserver.videoDrivers = lib.mkDefault ["modesetting"];
 
+  staypls = {
+    enable = true;
+    dirs = [
+      "/etc/nixos"
+      "/etc/ssh"
+      "/etc/NetworkManager"
+      "/var/log"
+      "/var/lib"
+      "/usr/systemd-placeholder"
+    ];
+  };
+
+  boot.initrd.luks.devices = {
+    nix = {
+      device = "/dev/disk/by-label/NIXROOT";
+    };
+    home = {
+      device = "/dev/disk/by-label/NIXHOME";
+    };
+    cryolite = {
+      device = "/dev/disk/by-label/CRYOLITE";
+    };
+    swap = {
+      device = "/dev/disk/by-label/SWAP";
+    };
+  };
+
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/a697a731-988f-4958-8cb2-bb8e50926d18";
-    fsType = "btrfs";
-    options = ["subvol=@"];
+    device = "none";
+    fsType = "tmpfs";
+    options = ["size=512M" "mode=755"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0122-6AA3";
+    device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
+    options = ["fmask=0077" "dmask=0077" "umask=0077"];
+  };
+
+  fileSystems."/nix" = {
+    neededForBoot = true;
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@nix" "compress=zstd" "x-gvfs-hide"];
+  };
+
+  fileSystems."/persist" = {
+    neededForBoot = true;
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@persist" "compress=zstd" "x-gvfs-hide"];
+  };
+
+  fileSystems."/tmp" = {
+    device = "/dev/mapper/nix";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@tmp" "x-gvfs-hide"];
+  };
+
+  fileSystems."/home" = {
+    neededForBoot = true;
+    device = "/dev/mapper/home";
+    fsType = "btrfs";
+    options = ["noatime" "discard" "subvol=@home" "compress=zstd" "x-gvfs-hide"];
+  };
+
+  fileSystems."/etc/cryolite" = {
+    device = "/dev/mapper/cryolite";
+    fsType = "ext4";
+    options = ["noatime" "x-gvfs-hide"];
+  };
+
+  fileSystems."/usr" = {
+    device = "/persist/usr";
+    fsType = "none";
+    options = ["bind" "X-fstrim.notrim" "x-gvfs-hide"];
   };
 
   # Lemme mount the disks!!
@@ -60,20 +129,8 @@
     fsType = "btrfs";
   };
 
-  fileSystems."/var/lib/docker/btrfs" = {
-    device = "/@/var/lib/docker/btrfs";
-    fsType = "none";
-    options = ["bind"];
-  };
-
-  fileSystems."/bin" = {
-    device = "/usr/bin";
-    fsType = "none";
-    options = ["bind"];
-  };
-
   swapDevices = [
-    {device = "/dev/disk/by-uuid/6582ff75-54fb-418b-8847-8b7177c3035f";}
+    {device = "/dev/mapper/swap";}
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
