@@ -15,7 +15,12 @@ in {
   # integrate well with the theme.
   environment.variables = {
     QT_STYLE_OVERRIDE = "darkly";
-    QT_QPA_PLATFORMTHEME = "qtct";
+    QT_QPA_PLATFORMTHEME = "kde";
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "kde";
   };
 
   homix = lib.mkIf (config.system.desktopEnvironment == "KDE") {
@@ -72,7 +77,7 @@ in {
     ".config/kdeglobals" = {
       text = ''
         [General]
-        ColorScheme[$i]=RosPineMoonlight
+        ColorScheme=RosPineMoonlight
 
         [Icons]
         Theme[$i]=WhiteSur-dark
