@@ -10,6 +10,8 @@ in {
   sops.secrets."git/signing-key" = {
     format = "yaml";
     sopsFile = "${inputs.secrets-flake}/secrets.yaml";
+    owner = "shomy";
+    mode = "0400";
   };
 
   homix.".gitconfig" = {
@@ -23,6 +25,8 @@ in {
         };
         init.defaultBranch = "main";
         gpg.format = "ssh";
+        commit.gpgsign = true;
+        tag.gpgsign = true;
       };
     };
   };
