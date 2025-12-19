@@ -12,7 +12,6 @@
     ./spicetify.nix
     ./obs.nix
     ./syncthing.nix
-    ./thunderbird
     ./zed.nix
   ];
 
