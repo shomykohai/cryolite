@@ -61,8 +61,8 @@
                 "applications:codium.desktop"
                 "applications:aseprite.desktop"
                 "applications:com.ayugram.desktop.desktop"
-                "applications:org.godotengine.Godot4.4.desktop"
-                "applications:github-desktop.desktop"
+                "applications:org.godotengine.Godot4.5.desktop"
+                "applications:github-desktop-plus.desktop"
                 "applications:obsidian.desktop"
               ];
             };
