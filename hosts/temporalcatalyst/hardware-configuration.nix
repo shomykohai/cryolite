@@ -22,7 +22,10 @@
   boot.kernelModules = ["kvm-amd" "zenpower"];
   boot.extraModulePackages = [config.boot.kernelPackages.zenpower];
   boot.kernelParams = [
-    "amd_pstate=active"
+    "amdgpu.ppfeaturemask=0xffffffff"
+    "amdgpu.lockup_timeout=10000"
+    "amdgpu.gpu_recovery=1"
+    "amdgpu.dc=1"
   ];
 
   # hardware.amdgpu.initrd.enable = lib.mkDefault true;
@@ -36,7 +39,7 @@
     ROC_ENABLE_PRE_VEGA = "1";
   };
 
-  services.xserver.videoDrivers = lib.mkDefault ["modesetting"];
+  services.xserver.videoDrivers = lib.mkDefault ["amdgpu"];
 
   staypls = {
     enable = true;
@@ -118,10 +121,9 @@
 
   # Lemme mount the disks!!
   fileSystems."/mnt/nvme2" = {
-    device = "/dev/disk/by-uuid/01DAC34DFF7B26D0";
-    fsType = "ntfs3";
-    # NTFS, thanks for being the worst filesystem!!
-    options = ["nofail" "fmask=0077" "dmask=0077"];
+    device = "/dev/disk/by-uuid/312796d5-6334-4957-a40f-50311f2b7749";
+    fsType = "ext4";
+    options = ["defaults" "noatime" "nodiratime" "discard" "nosuid"];
   };
 
   fileSystems."/mnt/workspace" = {
