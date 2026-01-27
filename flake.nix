@@ -70,11 +70,9 @@
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
 
-    # chaotic = {
-    #   url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    #   inputs.nixpkgs.follows = "nixpkgsUnstable";
-    #   # inputs.home-manager.follows = "home-manager";
-    # };
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+    };
 
     # Stuff
     nix-vscode-extensions = {
