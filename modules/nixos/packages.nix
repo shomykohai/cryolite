@@ -53,6 +53,14 @@
     python3Packages.pyqt6 # For Reflake
     libsecret
     # seahorse
+
+    # Utilities
+    coreutils
+    tree
+    usbutils
+    file
+    wget
+    jq
   ];
 
   # Up to date packages
