@@ -1,7 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{...}: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     # Import default configuration first
     ../../modules/nixos/default-configuration.nix
@@ -17,12 +22,17 @@
   networking.hostName = "temporalcatalyst";
 
   zramSwap = {
-    memoryPercent = 1024 * 8; # 8GB
+    memoryPercent = 50; # 8GB
   };
+
+  nixpkgs.overlays = [
+    inputs.nix-cachyos-kernel.overlays.pinned
+  ];
 
   system.desktopEnvironment = "KDE";
   docker.stregatto.enable = true;
   games.genshin-impact.enable = true;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
 
   ## TODO: Put in a more secure place
   secrets.ageKeyPath = "/home/shomy/.config/sops/age/keys.txt";
