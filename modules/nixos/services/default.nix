@@ -27,6 +27,9 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.journald = {
+    storage = "persistent";
+  };
 
   # services.gnome.gnome-keyring.enable = true;
 }
