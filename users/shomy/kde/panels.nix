@@ -61,7 +61,7 @@
                 "applications:dev.zed.Zed.desktop"
                 "applications:aseprite.desktop"
                 "applications:com.ayugram.desktop.desktop"
-                "applications:org.godotengine.Godot4.5.desktop"
+                "applications:org.godotengine.Godot4.6.desktop"
                 "applications:github-desktop-plus.desktop"
                 "applications:obsidian.desktop"
                 "applications:anime-game-launcher.desktop"
