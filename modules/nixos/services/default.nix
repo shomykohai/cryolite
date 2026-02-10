@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./binary-cache.nix
     ./syncthing.nix
     ./udev.nix
     ./qemu.nix
