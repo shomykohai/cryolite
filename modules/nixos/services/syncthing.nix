@@ -7,6 +7,5 @@
     overrideDevices = true;
     overrideFolders = true;
     openDefaultPorts = true;
-    extraFlags = ["--no-default-folder"];
   };
 }
