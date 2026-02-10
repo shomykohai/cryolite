@@ -38,6 +38,20 @@
       "flakes"
       "pipe-operator" # I'm using lix. When using nix, it should be `pipe-operators`
     ];
+
+    registry = {
+      frostix = {
+        from = {
+          type = "indirect";
+          id = "frostix";
+        };
+        to = {
+          type = "github";
+          owner = "shomykohai";
+          repo = "frostix";
+        };
+      };
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
