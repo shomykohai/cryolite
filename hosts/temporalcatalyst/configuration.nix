@@ -29,6 +29,9 @@
     inputs.nix-cachyos-kernel.overlays.pinned
   ];
 
+  nix.settings.substituters = ["https://cache.garnix.io"];
+  nix.settings.trusted-public-keys = ["cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="];
+
   system.desktopEnvironment = "KDE";
   docker.stregatto.enable = true;
   games.genshin-impact.enable = true;
