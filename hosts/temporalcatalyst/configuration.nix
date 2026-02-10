@@ -35,7 +35,11 @@
   system.desktopEnvironment = "KDE";
   docker.stregatto.enable = true;
   games.genshin-impact.enable = true;
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+  games.minecraft.enable = true;
+
+  services.openssh = {
+    enable = true;
+  };
 
   ## TODO: Put in a more secure place
   secrets.ageKeyPath = "/home/shomy/.config/sops/age/keys.txt";
