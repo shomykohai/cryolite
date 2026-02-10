@@ -58,12 +58,13 @@
                 "applications:org.kde.dolphin.desktop"
                 "applications:com.mitchellh.ghostty.desktop"
                 "applications:vesktop.desktop"
-                "applications:codium.desktop"
+                "applications:dev.zed.Zed.desktop"
                 "applications:aseprite.desktop"
                 "applications:com.ayugram.desktop.desktop"
                 "applications:org.godotengine.Godot4.5.desktop"
                 "applications:github-desktop-plus.desktop"
                 "applications:obsidian.desktop"
+                "applications:anime-game-launcher.desktop"
               ];
             };
           }
