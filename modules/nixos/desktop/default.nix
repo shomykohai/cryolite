@@ -31,7 +31,7 @@ in {
     services.xserver.enable = false;
 
     services.desktopManager.plasma6.enable = lib.mkDefault isKDE;
-    services.xserver.desktopManager.gnome.enable = lib.mkDefault isGnome;
+    services.desktopManager.gnome.enable = lib.mkDefault isGnome;
     # On unstable: or 25.11, uncomment this
     # services.desktopManager.gnome.enable = lib.mkDefault isGnome;
 
@@ -62,6 +62,6 @@ in {
       ++ lib.optionals isGnome [
       ];
 
-    services.xserver.displayManager.gdm.enable = lib.mkDefault isGnome;
+    services.displayManager.gdm.enable = lib.mkDefault isGnome;
   };
 }
