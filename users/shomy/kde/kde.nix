@@ -99,6 +99,14 @@ in {
       copy = true;
     };
 
+    ".config/kcminputrc" = {
+      text = ''
+        [Mouse]
+        cursorTheme=WhiteSur-cursors
+      '';
+      copy = true;
+    };
+
     ".config/darklyrc" = {
       text = ''
         [Windeco]
