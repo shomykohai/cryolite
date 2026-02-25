@@ -7,10 +7,8 @@
   # Stable packages
   stablePackages = with pkgs; [
     ghidra-bin
-    eclipses.eclipse-java
     frostix.dex2jar
     jadx
-    android-studio
     musescore
   ];
 

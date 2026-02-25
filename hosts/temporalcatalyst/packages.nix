@@ -6,7 +6,6 @@
   # Stable packages
   stablePackages = with pkgs; [
     ghidra-bin
-    eclipses.eclipse-java
     dex2jar
     jadx
     # Music
