@@ -55,8 +55,11 @@
 
     # Utilities
     coreutils
-    tree
+    binutils
     usbutils
+    hyfetch
+    htop
+    tree
     file
     wget
     jq
