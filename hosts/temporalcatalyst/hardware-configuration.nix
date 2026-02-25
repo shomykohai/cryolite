@@ -22,7 +22,7 @@
   boot.kernelModules = ["kvm-amd" "zenpower"];
   boot.extraModulePackages = [config.boot.kernelPackages.zenpower];
   boot.kernelParams = [
-    "amdgpu.ppfeaturemask=0xffffffff"
+    "amdgpu.ppfeaturemask=0xfffd3fff"
     "amdgpu.lockup_timeout=10000"
     "amdgpu.gpu_recovery=1"
     "amdgpu.dc=1"
