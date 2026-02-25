@@ -30,7 +30,6 @@
         specialArgs = {inherit inputs frostix pkgsUnstable;};
         modules = [
           ./hosts/${hostName}/configuration.nix
-          inputs.reflake.nixosModules.default
           inputs.nix-index-database.nixosModules.nix-index
           inputs.sops-nix.nixosModules.sops
         ];
@@ -71,11 +70,6 @@
 
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
-
-    reflake = {
-      url = "github:shomykohai/reflake";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
 

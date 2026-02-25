@@ -50,7 +50,6 @@
     #TODO: USE UNSTABLE ONCE IT IS FIXED
     aseprite
     # Core System
-    python3Packages.pyqt6 # For Reflake
     libsecret
     # seahorse
 

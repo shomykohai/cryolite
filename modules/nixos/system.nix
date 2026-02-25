@@ -1,27 +1,16 @@
 ## Defines the core system configuration for NixOS.
 {
   inputs,
-  lib,
-  config,
   pkgs,
   ...
 }: {
-  # options = {
-  # };
-
   ## Auto update service
   system.autoUpgrade = {
     enable = true;
     persistent = true;
     dates = "*-*-01/3 09:30:00";
     flake = inputs.self.outPath;
-  };
-
-  services.reflake = lib.mkIf config.system.autoUpgrade.enable {
-    enable = true;
-    flakePath = "/home/shomy/.dotfiles/";
-    showUiPrompt = false;
-    updateInterval = 604800; # 1 week in seconds
+    flags = ["--override-input" "secrets-flake" inputs.secrets-flake.outPath];
   };
 
   nix = {
