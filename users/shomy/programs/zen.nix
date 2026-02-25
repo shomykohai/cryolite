@@ -45,6 +45,8 @@
           URL = "https://www.startpage.com/";
           Locked = true;
         };
+        OfferToSaveLogins = false;
+        OfferToSaveLoginsDefault = false;
 
         DisableEncryptedClientHello = true;
         SSLVersionMax = "tls1.3";
