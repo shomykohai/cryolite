@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./zsh.nix
-    ./codium.nix
     ./ghostty.nix
     ./git.nix
     ./zen.nix

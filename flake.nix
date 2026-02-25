@@ -53,17 +53,6 @@
 
     secrets-flake.url = "git+ssh://git@gitlab.com/shomy/secrets-flake.git";
 
-    # home-manager = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgsUnstable";
-    # };
-
-    # plasma-manager = {
-    #   url = "github:nix-community/plasma-manager";
-    #   inputs.nixpkgs.follows = "nixpkgsUnstable";
-    #   inputs.home-manager.follows = "home-manager";
-    # };
-
     # Third party repos
     frostix = {
       url = "github:shomykohai/frostix";
@@ -73,12 +62,6 @@
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
-
-    # Stuff
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     aagl = {
