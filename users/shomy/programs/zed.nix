@@ -40,8 +40,8 @@ in {
           "metrics": false
         },
         "disable_ai": false,
-        "features": {
-          "edit_prediction_provider": "copilot"
+        "edit_predictions": {
+          "provider": "copilot"
         },
         "theme": "Rosé Pine Moon",
         "ui_font_size": 16,
