@@ -90,7 +90,7 @@ in {
         ${
           if f.copy
           then ''
-            cp -f ${f.source} "$FILE"
+            cp --no-preserve=mode -f ${f.source} "$FILE"
             chown "$USER" "$FILE"
           ''
           else ''ln -sf ${f.source} "$FILE"''
