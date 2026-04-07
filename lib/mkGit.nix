@@ -19,10 +19,20 @@
     else builtins.toString v;
 
   formatSection = name: values:
-    "[${name}]\n"
-    + (
-      concatStringsSep "\n"
-      (mapAttrsToList (key: value: "  ${key} = ${valueToString value}") values)
-    );
+    if builtins.isAttrs values then
+      concatStringsSep "\n\n" (
+        mapAttrsToList (key: value:
+          if builtins.isAttrs value then
+            "[${name} \"${key}\"]\n"
+            + concatStringsSep "\n"
+              (mapAttrsToList (k: v: "  ${k} = ${valueToString v}") value)
+          else
+            "[${name}]\n"
+            + concatStringsSep "\n"
+              (mapAttrsToList (k: v: "  ${k} = ${valueToString v}") values)
+        ) values
+      )
+    else
+      throw "Invalid git config structure";
 in
   concatStringsSep "\n\n" (mapAttrsToList formatSection config)
