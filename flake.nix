@@ -38,6 +38,7 @@
     nixosConfigurations = {
       temporalcatalyst = mkSystem "temporalcatalyst" "x86_64-linux";
       chronoshaven = mkSystem "chronoshaven" "x86_64-linux";
+      selene = mkSystem "selene" "x86_64-linux";
     };
   };
 
