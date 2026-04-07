@@ -1,4 +1,4 @@
-{lib, ...}: let
+{lib, config, ...}: let
   mkPanels = import ./lib/mkPanels.nix {inherit lib;};
 
   panelConfig = mkPanels.mkPanels {
@@ -64,6 +64,7 @@
                 "applications:org.godotengine.Godot4.6.desktop"
                 "applications:github-desktop-plus.desktop"
                 "applications:obsidian.desktop"
+              ]  ++ lib.optionals config.games.genshin-impact.enable [
                 "applications:anime-game-launcher.desktop"
               ];
             };

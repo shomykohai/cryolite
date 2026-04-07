@@ -4,7 +4,7 @@
   ...
 }: let
   # Import panels.nix and access the panelConfigs attribute
-  panels = import ./panels.nix {inherit lib;};
+  panels = import ./panels.nix {inherit lib config;};
 in {
   imports = [
     # ./kde-connect.nix
@@ -107,8 +107,25 @@ in {
       copy = true;
     };
 
+    ".config/ksmserverrc" = {
+      text = ''
+        [General]
+        loginMode=emptySession
+
+        [LegacySession: saved at previous logout]
+        count=0
+
+        [Session: saved at previous logout]
+        count=0
+      '';
+      copy = true;
+    };
+
     ".config/darklyrc" = {
       text = ''
+        [Common]
+        FloatingTitlebar=false
+
         [Windeco]
         TitleAlignment=AlignCenter
       '';
