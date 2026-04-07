@@ -27,6 +27,13 @@ in {
         gpg.format = "ssh";
         commit.gpgsign = true;
         tag.gpgsign = true;
+
+        filter.lfs = {
+          clean = "git-lfs clean -- %f";
+          process = "git-lfs filter-process";
+          required = true;
+          smudge = "git-lfs smudge -- %f";
+        };
       };
     };
   };
