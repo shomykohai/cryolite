@@ -112,11 +112,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775158954,
-        "narHash": "sha256-JPQAtNg1ut2oGLBzVnW8aBf7BfLegej5TRClIo8kGwc=",
+        "lastModified": 1776518477,
+        "narHash": "sha256-X4rtP8gxZXIH/MwvU6FXgVS3PtDB83h86FfE/C+ZzGw=",
         "owner": "shomykohai",
         "repo": "frostix",
-        "rev": "d081d890056095e98ac690335da2c0fcd5120476",
+        "rev": "873cbf2045cc956176f864c212c16085433c9712",
         "type": "github"
       },
       "original": {
