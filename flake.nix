@@ -40,6 +40,13 @@
       chronoshaven = mkSystem "chronoshaven" "x86_64-linux";
       selene = mkSystem "selene" "x86_64-linux";
     };
+
+    hydraJobs = {
+      nixos = {
+        selene = self.nixosConfigurations.selene.config.system.build.toplevel;
+        temporalcatalyst = self.nixosConfigurations.temporalcatalyst.config.system.build.toplevel;
+      };
+    };
   };
 
   inputs = {
