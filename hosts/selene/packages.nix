@@ -11,6 +11,8 @@
     musescore
     # UART!!
     tio
+    # MediaTek stuff!!
+    frostix.antumbra
   ];
 
   # Up to date packages
