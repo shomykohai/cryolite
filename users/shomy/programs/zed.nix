@@ -137,6 +137,18 @@ in {
                 "expr": "import (builtins.getFlake \"/etc/cryolite/cryolite\").nixosConfigurations.chronoshaven.options"
               }
             }
+          },
+          "rubocop": {
+            "initialization_options": {
+              "safeAutocorrect": false
+            }
+          },
+          "ruby-lsp": {
+            "initialization_options": {
+              "enabledFeatures": {
+                "diagnostics": false
+              }
+            }
           }
         },
 
@@ -146,6 +158,9 @@ in {
             "formatter": {
               "external": { "command": "alejandra", "arguments": ["--quiet", "--"] }
             }
+          },
+          "Ruby": {
+            "language_servers": ["ruby-lsp", "rubocop", "!nil"],
           }
         }
       }
