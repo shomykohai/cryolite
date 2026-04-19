@@ -31,7 +31,11 @@ in {
         "auto_install_extensions": {
           "nix": true,
           "python": true,
-          "rust": true
+          "rust": true,
+          "ruby": true,
+          "gdscript": true,
+          "rose-pine-theme": true,
+          "colored-zed-icons-theme": true
         },
         "buffer_font_size": 11,
 
