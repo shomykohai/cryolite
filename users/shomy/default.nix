@@ -1,11 +1,17 @@
-{...}: {
+{
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ../../third-party/homix.nix
-    ./kde/kde.nix
 
     ./programs
     ./ssh.nix
+
+    ./kde
   ];
+
   users.users.shomy = {
     homix = true; # Enable homix
     isNormalUser = true;

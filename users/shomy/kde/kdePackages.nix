@@ -5,18 +5,26 @@
   inputs,
   ...
 }: {
-  users.users.shomy.packages = with pkgs; [
-    kdePackages.plasma-integration # Needed for some KDE apps to use Darkly correctly
-    kdePackages.bluez-qt
-    kdePackages.kde-gtk-config
-    kdePackages.krfb # KDE Remote Desktop
+  users.users.shomy.packages = builtins.attrValues {
+    inherit
+      (pkgs.kdePackages)
+      plasma-integration # Needed for some KDE apps to use Darkly correctly
+      bluez-qt
+      kde-gtk-config
+      krfb # KDE Remote Desktop
+      ;
 
-    plasma-panel-colorizer
-    kde-rounded-corners
-    frostix.kde-plasma-control-hub
+    inherit
+      (pkgs)
+      plasma-panel-colorizer
+      kde-rounded-corners
+      ;
 
-    # latte-dock # Wait for https://invent.kde.org/plasma/latte-dock/-/tree/work/plasma6 to be done
-  ];
+    inherit
+      (frostix)
+      kde-plasma-control-hub
+      ;
+  };
 
   programs.kdeconnect.enable = true;
 }
