@@ -15,22 +15,24 @@
     ...
   } @ inputs: let
     mkSystem = hostName: arch: let
-      frostix = inputs.frostix.packages.${arch};
-      # Shalt thee suffer the wrath of importing nixpkgs,
-      # slower evaluations times awaits thee.
+      pkgs = import nixpkgs {
+        system = arch;
+        config.allowUnfree = true;
+      };
+
       pkgsUnstable = import nixpkgsUnstable {
         system = arch;
-        config = {
-          allowUnfree = true;
-        };
+        config.allowUnfree = true;
       };
+
+      frostix = inputs.frostix.packages.${arch};
     in
       nixpkgs.lib.nixosSystem {
         system = arch;
         specialArgs = {inherit inputs frostix pkgsUnstable;};
         modules = [
+          {nixpkgs.pkgs = pkgs;}
           ./hosts/${hostName}/configuration.nix
-          inputs.nix-index-database.nixosModules.nix-index
           inputs.sops-nix.nixosModules.sops
         ];
       };
@@ -40,18 +42,16 @@
       chronoshaven = mkSystem "chronoshaven" "x86_64-linux";
       selene = mkSystem "selene" "x86_64-linux";
     };
-
-    hydraJobs = {
-      nixos = {
-        selene = self.nixosConfigurations.selene.config.system.build.toplevel;
-        temporalcatalyst = self.nixosConfigurations.temporalcatalyst.config.system.build.toplevel;
-      };
-    };
   };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    flake-compat = {
+      url = "https://git.lix.systems/lix-project/flake-compat/archive/main.tar.gz";
+      flake = false;
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -74,22 +74,12 @@
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
-
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
-      # inputs.home-manager.follows = "home-manager";
     };
   };
 }
