@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.pay-respects = {
     enable = true;
   };
@@ -12,7 +16,7 @@
 
     shellAliases = {
       ll = "ls -l";
-      update = "sudo nixos-rebuild switch --flake /etc/cryolite/cryolite#$(hostname) --override-input secrets-flake /etc/cryolite/cryolite/secrets";
+      update = "sudo nixos-rebuild switch --flake ${config.system.flakePath}#$(hostname) --override-input secrets-flake ${config.system.flakePath}/secrets";
       py-venv = "python -m venv .venv && source .venv/bin/activate";
       ws = "cd ~/workspace";
       nd = "nix develop";

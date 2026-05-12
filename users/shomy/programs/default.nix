@@ -4,14 +4,15 @@
   ...
 }: {
   imports = [
-    ./zsh.nix
+    #./zsh.nix
+    ./fish
     ./ghostty.nix
     ./git.nix
     ./zen.nix
-    ./spicetify.nix
+    #./spicetify.nix
     ./obs.nix
     ./syncthing.nix
-    ./zed.nix
+    ./zed
   ];
 
   users.users.shomy.packages = [
