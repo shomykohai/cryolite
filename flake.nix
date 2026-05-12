@@ -58,7 +58,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    secrets-flake.url = "git+ssh://git@gitlab.com/shomy/secrets-flake.git";
+    secrets-flake.url = "git+ssh://forgejo@git.kaerulabs.com/shomy/cryolite-secrets.git";
 
     # Third party repos
     frostix = {
