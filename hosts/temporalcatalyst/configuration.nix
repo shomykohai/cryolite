@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   pkgs,
-  lib,
   inputs,
   ...
 }: {
@@ -21,13 +20,11 @@
 
   networking.hostName = "temporalcatalyst";
 
+  system.flakePath = "/etc/cryolite/cryolite";
+
   zramSwap = {
     memoryPercent = 50; # 8GB
   };
-
-  nixpkgs.overlays = [
-    inputs.nix-cachyos-kernel.overlays.pinned
-  ];
 
   nix.settings.substituters = ["https://cache.garnix.io" "https://attic.xuyh0120.win/lantian"];
   nix.settings.trusted-public-keys = ["cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
@@ -39,8 +36,7 @@
   services.openssh = {
     enable = true;
   };
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
+  boot.kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}.linuxPackages-cachyos-latest-lto-x86_64-v3;
 
-  ## TODO: Put in a more secure place
-  secrets.ageKeyPath = "/home/shomy/.config/sops/age/keys.txt";
+  secrets.ageKeyPath = "/persist/secrets/keys.txt";
 }

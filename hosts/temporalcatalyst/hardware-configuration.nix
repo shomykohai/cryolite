@@ -94,7 +94,7 @@
     options = ["noatime" "discard" "subvol=@persist" "compress=zstd" "x-gvfs-hide"];
   };
 
-  fileSystems."/tmp" = {
+  fileSystems."/var/tmp" = {
     device = "/dev/mapper/nix";
     fsType = "btrfs";
     options = ["noatime" "discard" "subvol=@tmp" "x-gvfs-hide"];

@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   inputs,
   ...
 }: {
@@ -20,13 +18,11 @@
 
   networking.hostName = "selene";
 
+  system.flakePath = "/etc/cryolite/cryolite";
+
   zramSwap = {
     memoryPercent = 50;
   };
-
-  nixpkgs.overlays = [
-    inputs.nix-cachyos-kernel.overlays.pinned
-  ];
 
   nix.settings.substituters = ["https://cache.garnix.io" "https://attic.xuyh0120.win/lantian"];
   nix.settings.trusted-public-keys = ["cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
@@ -37,6 +33,6 @@
     enable = true;
   };
 
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
+  boot.kernelPackages = inputs.nix-cachyos-kernel.legacyPackages."x86_64-linux".linuxPackages-cachyos-latest-lto-x86_64-v3;
   secrets.ageKeyPath = "/persist/secrets/keys.txt";
 }

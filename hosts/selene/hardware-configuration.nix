@@ -12,8 +12,8 @@
     ../../third-party/staypls.nix
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "cryptd" ];
+  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
+  boot.initrd.kernelModules = ["cryptd"];
   boot.initrd.systemd.tpm2.enable = true;
   security.tpm2.enable = true;
   boot.kernelModules = ["kvm-intel"];
@@ -77,7 +77,7 @@
     options = ["noatime" "discard" "subvol=@persist" "compress=zstd" "x-gvfs-hide"];
   };
 
-  fileSystems."/tmp" = {
+  fileSystems."/var/tmp" = {
     device = "/dev/mapper/nix";
     fsType = "btrfs";
     options = ["noatime" "discard" "subvol=@tmp" "x-gvfs-hide"];

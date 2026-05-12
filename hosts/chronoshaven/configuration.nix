@@ -19,6 +19,8 @@
 
   networking.hostName = "chronoshaven";
 
+  system.flakePath = "/etc/cryolite/cryolite";
+
   zramSwap = {
     memoryPercent = 1024 * 6; # 6GB
   };

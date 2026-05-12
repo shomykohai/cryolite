@@ -4,17 +4,20 @@
   ...
 }: let
   # Stable packages
-  stablePackages = with pkgs; [
+  stablePackages = builtins.attrValues {
+    inherit (pkgs)
     ghidra-bin
     dex2jar
     jadx
     # Music
     musescore
-  ];
+    ;
+  };
 
   # Up to date packages
-  unstablePackages = with pkgsUnstable; [
-  ];
+  unstablePackages = builtins.attrValues {
+    # inherit (pkgsUnstable)
+  };
 in {
   environment.systemPackages = stablePackages ++ unstablePackages;
 }

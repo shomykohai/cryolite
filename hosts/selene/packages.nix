@@ -5,19 +5,19 @@
   ...
 }: let
   # Stable packages
-  stablePackages = with pkgs; [
+  stablePackages = [
     frostix.dex2jar
-    jadx
-    musescore
+    pkgs.jadx
+    pkgs.musescore
     # UART!!
-    tio
+    pkgs.tio
     # MediaTek stuff!!
     frostix.antumbra
   ];
 
   # Up to date packages
-  unstablePackages = with pkgsUnstable; [
-    ghidra-bin
+  unstablePackages = [
+    pkgsUnstable.ghidra-bin
   ];
 in {
   environment.systemPackages = stablePackages ++ unstablePackages;
