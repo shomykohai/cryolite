@@ -42,8 +42,14 @@ in {
             '';
           };
           source = mkOption {
-            type = types.path;
+            type = types.nullOr types.path;
+            default = null;
             description = "Path of the source file or directory.";
+          };
+          symlink = mkOption {
+            type = types.nullOr types.str;
+            default = null;
+            description = "Direct absolute path to symlink to.";
           };
           text = mkOption {
             default = null;
@@ -87,13 +93,16 @@ in {
       files = map (f: ''
         FILE=$HOME/${f.path}
         mkdir -p "$(dirname "$FILE")"
+        rm -rf "$FILE"
         ${
-          if f.copy
+          if f.symlink != null
+          then ''ln -sfn "${f.symlink}" "$FILE"''
+          else if f.copy
           then ''
             cp --no-preserve=mode -f ${f.source} "$FILE"
             chown "$USER" "$FILE"
           ''
-          else ''ln -sf ${f.source} "$FILE"''
+          else ''ln -sfn ${f.source} "$FILE"''
         }
       '') (attrValues config.homix);
     in
