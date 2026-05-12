@@ -12,6 +12,14 @@
 
   isKDE = de == "kde";
   isGnome = de == "gnome";
+
+  # Hack to make the theme work.
+  # Since frostix uses nixpkgs-unstable, we can't mix QT versions.
+  # The solution is to override it so it pulls in the same QT version
+  # as the system (stable).
+  sddmSilentTheme = frostix.sddm-silent-theme.override {
+    pkgs = pkgs;
+  };
 in {
   options.system.desktopEnvironment = lib.mkOption {
     type = lib.types.str;
@@ -22,12 +30,6 @@ in {
   };
 
   config = lib.mkIf (de != "none") {
-    #nixpkgs.overlays = [
-    #  (final: prev: {
-    #    kdePackages = pkgsUnstable.kdePackages;
-    #  })
-    #];
-
     services.xserver.enable = false;
 
     services.desktopManager.plasma6.enable = lib.mkDefault isKDE;
@@ -38,6 +40,14 @@ in {
     services.displayManager.sddm = lib.mkIf isKDE {
       enable = true;
       wayland.enable = true;
+      theme = "silent";
+      extraPackages = [sddmSilentTheme];
+      settings = {
+        General = {
+          GreeterEnvironment = "QML2_IMPORT_PATH=${sddmSilentTheme}/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard";
+          InputMethod = "qtvirtualkeyboard";
+        };
+      };
     };
 
     # Packages based on desktop environment
@@ -52,7 +62,7 @@ in {
         })
         pkgsUnstable.whitesur-kde
         pkgsUnstable.whitesur-cursors
-        frostix.kde-plasma-flex-hub
+        sddmSilentTheme
 
         (pkgsUnstable.darkly.override {
           qtPackages = pkgs.kdePackages;
