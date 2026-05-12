@@ -11,7 +11,7 @@
   # So, let's just wrap it ourselves. Cool, innit?
   programs.firefox = {
     enable = true;
-    package = pkgs.wrapFirefox inputs.zen-browser.packages.${pkgs.system}.zen-browser-unwrapped {
+    package = pkgs.wrapFirefox inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped {
       pname = "zen-browser";
       # https://mozilla.github.io/policy-templates/
       extraPolicies = {

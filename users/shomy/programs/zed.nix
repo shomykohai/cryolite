@@ -2,6 +2,7 @@
   lib,
   pkgs,
   pkgsUnstable,
+  config,
   ...
 }: let
   zedExtraPackages = [];
@@ -135,10 +136,10 @@ in {
           "nixd": {
             "settings": {
               "nixpkgs": {
-                "expr": "import (builtins.getFlake \"/etc/cryolite/cryolite\").inputs.nixpkgs { }"
+                "expr": "import (builtins.getFlake \"${config.system.flakePath}\").inputs.nixpkgs { }"
               },
               "options": {
-                "expr": "import (builtins.getFlake \"/etc/cryolite/cryolite\").nixosConfigurations.chronoshaven.options"
+                "expr": "import (builtins.getFlake \"${config.system.flakePath}\").nixosConfigurations.chronoshaven.options"
               }
             }
           },
