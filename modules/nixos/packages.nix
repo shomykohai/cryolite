@@ -7,83 +7,89 @@
   ...
 }: let
   # Stable packages
-  stablePackages = with pkgs; [
-    inkscape
-    # Code editors related stuff
-
-    # Development tools
-    python3
-    imhex
-
-    # Various stuff
-    vesktop
-    ghostty
-    # ayugram-desktop
-
-    # kdePackages.qtstyleplugin-kvantum
-    # kdePackages.qt6ct
-    # System management
-    btrfs-assistant
+  stablePackages = builtins.attrValues {
+    inherit
+      (pkgs)
+      inkscape
+      # Code editors related stuff
+      # Development tools
+      python3
+      imhex
+      # Various stuff
+      vesktop
+      ghostty
+      # ayugram-desktop
+      # kdePackages.qtstyleplugin-kvantum
+      # kdePackages.qt6ct
+      # System management
+      btrfs-assistant
+      # support 32-bit only
+      wine
+      # support 64-bit only
+      wine64
+      # winetricks (all versions)
+      winetricks
+      wineasio
+      rar
+      zip
+      #TODO: USE UNSTABLE ONCE IT IS FIXED
+      aseprite
+      # Core System
+      libsecret
+      # seahorse
+      # Utilities
+      coreutils
+      binutils
+      usbutils
+      hyfetch
+      htop
+      tree
+      file
+      wget
+      jq
+      ;
 
     # support both 32-bit and 64-bit applications
-    wineWowPackages.stable
-    # support 32-bit only
-    wine
-    # support 64-bit only
-    (wine.override {wineBuild = "wine64";})
-    # support 64-bit only
-    wine64
-    # wine-staging (version with experimental features)
-    wineWowPackages.staging
-    # winetricks (all versions)
-    winetricks
-    # native wayland support (unstable)
-    wineWowPackages.waylandFull
-    wineasio
-    (bottles.override
-      {
-        removeWarningPopup = true;
-      })
-    rar
-    zip
+    inherit
+      (pkgs.wineWowPackages)
+      stable
+      # wine-staging (version with experimental features)
+      staging
+      # native wayland support (unstable)
+      waylandFull
+      ;
 
-    #TODO: USE UNSTABLE ONCE IT IS FIXED
-    aseprite
-    # Core System
-    libsecret
-    # seahorse
-
-    # Utilities
-    coreutils
-    binutils
-    usbutils
-    hyfetch
-    htop
-    tree
-    file
-    wget
-    jq
-  ];
+    # support 64-bit only
+    wine64Override = pkgs.wine.override {wineBuild = "wine64";};
+    bottlesOverride = pkgs.bottles.override {
+      removeWarningPopup = true;
+    };
+  };
 
   # Up to date packages
-  unstablePackages = with pkgsUnstable; [
-    godot
-    frostix.github-desktop-plus
-    jdk8
-    # Android development & research
-    frostix.mtkclient-git
-    python3Packages.pyserial
-    frostix.dexpatcher
+  unstablePackages = builtins.attrValues {
+    inherit
+      (pkgsUnstable)
+      godot
+      jdk8
+      # Art
+      #    aseprite
+      # Notes
+      obsidian
+      ;
 
-    # kdePackages.kcoreaddons
-    # KDE Theme
+    inherit
+      (frostix)
+      github-desktop-plus
+      mtkclient-git
+      dexpatcher
+      ;
 
-    # Art
-    #    aseprite
-
-    # Notes
-    obsidian
-  ];
+    inherit
+      (pkgsUnstable.python3Packages)
+      pyserial
+      ;
+  };
 in
   # Define packages shared between hosts.
   # For hosts specific packages, change them inside the packages.nix inside the
@@ -114,7 +120,6 @@ in
       enable = true;
       lfs.enable = true;
     };
-    # Allow unfree packages
 
     xdg.portal.extraPortals = [
       pkgs.xdg-desktop-portal-gtk
@@ -122,5 +127,4 @@ in
 
     # Combine both lists for systemPackages
     environment.systemPackages = stablePackages ++ unstablePackages;
-    # inputs.home.packages = homePackages ++ homeUnstablePackages;
   }
