@@ -10,4 +10,11 @@
     mode = "0400";
     path = "/home/shomy/.ssh/id_ed25519";
   };
+
+  sops.secrets."solstice/deploy" = {
+    format = "yaml";
+    owner = "shomy";
+    mode = "0400";
+    path = "/home/shomy/.ssh/solstice_deploy";
+  };
 }
