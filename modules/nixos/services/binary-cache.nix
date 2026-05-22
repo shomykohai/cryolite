@@ -14,9 +14,9 @@
 
   nix.settings = {
     substituters = [
-      "https://attic.services.itssho.my/umbra"
+      "https://attic.services.itssho.my/sunrise"
     ];
-    trusted-public-keys = ["umbra:hogFc/tNDw5cXhdBfFagDNEEiR6NGspXBzyVJhzka/4="];
+    trusted-public-keys = ["sunrise:hogFc/tNDw5cXhdBfFagDNEEiR6NGspXBzyVJhzka/4="];
     netrc-file = config.sops.templates.netrc.path;
   };
 }
