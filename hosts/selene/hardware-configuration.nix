@@ -2,6 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  pkgs,
   config,
   lib,
   modulesPath,
@@ -13,13 +14,34 @@
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = ["cryptd"];
+  boot.initrd.kernelModules = ["cryptd" "i915"];
   boot.initrd.systemd.tpm2.enable = true;
   security.tpm2.enable = true;
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
+  boot.kernelParams = [
+    "acpi_backlight=native"
+  ];
 
+  services.thermald.enable = true;
   services.fprintd.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = builtins.attrValues {
+      inherit
+        (pkgs)
+        intel-media-driver
+        intel-vaapi-driver
+        vpl-gpu-rt
+        libvdpau-va-gl
+        intel-compute-runtime
+        ;
+    };
+  };
+
+  services.xserver.videoDrivers = lib.mkForce ["i915" "intel"];
+  environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
 
   staypls = {
     enable = true;
