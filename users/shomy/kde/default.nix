@@ -28,7 +28,6 @@
       ".config/darklyrc".symlink = "${basePath}/darklyrc";
       ".config/kdeglobals".symlink = "${basePath}/kdeglobals";
       ".config/ksmserverrc".symlink = "${basePath}/ksmserverrc";
-      ".config/kcminputrc".symlink = "${basePath}/kcminputrc";
 
       # Ensure that Alt+Tab works as expected, since it broke lol
       ".config/kglobalshortcutsrc" = {
@@ -36,6 +35,14 @@
           [kwin]
           Walk Through Windows=Alt+Tab,Alt+Tab,Walk Through Windows
           Walk Through Windows (Reverse)=Alt+Shift+Tab,Alt+Shift+Tab,Walk Through Windows (Reverse)
+        '';
+        copy = true;
+      };
+
+      ".config/kcminputrc" = {
+        text = ''
+          [Mouse]
+          cursorTheme=WhiteSur-cursors
         '';
         copy = true;
       };

@@ -108,6 +108,7 @@ ForegroundPositive=234,154,151
 ForegroundVisited=156, 207, 216
 
 [General]
+ColorScheme=RosPineMoonlight
 ColorSchemeHash=93f28e0380ebd961ce263de096ab86d530e3498e
 
 [Icons]
