@@ -17,8 +17,8 @@
   boot.initrd.kernelModules = ["cryptd" "i915"];
   boot.initrd.systemd.tpm2.enable = true;
   security.tpm2.enable = true;
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.kernelModules = ["kvm-intel" "acpi_call"];
+  boot.extraModulePackages = [config.boot.kernelPackages.acpi_call];
   boot.kernelParams = [
     "acpi_backlight=native"
   ];
@@ -39,6 +39,28 @@
         ;
     };
   };
+
+  services.tlp = {
+    enable = true;
+    pd.enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 40;
+
+      START_CHARGE_THRESH_BAT0 = 40;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
+
+  services.power-profiles-daemon.enable = lib.mkForce false;
 
   services.xserver.videoDrivers = lib.mkForce ["i915" "intel"];
   environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
@@ -135,6 +157,8 @@
       device = "/dev/mapper/swap";
     }
   ];
+
+  boot.tmp.useTmpfs = true;
 
   networking.useDHCP = lib.mkDefault true;
 
