@@ -45,7 +45,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-compat = {
@@ -74,7 +74,6 @@
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {

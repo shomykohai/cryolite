@@ -34,8 +34,6 @@ in {
 
     services.desktopManager.plasma6.enable = lib.mkDefault isKDE;
     services.desktopManager.gnome.enable = lib.mkDefault isGnome;
-    # On unstable: or 25.11, uncomment this
-    # services.desktopManager.gnome.enable = lib.mkDefault isGnome;
 
     services.displayManager.sddm = lib.mkIf isKDE {
       enable = true;
@@ -65,9 +63,9 @@ in {
         sddmSilentTheme
 
         (pkgsUnstable.darkly.override {
-          qtPackages = pkgs.kdePackages;
+          kdePackages = pkgs.kdePackages;
         })
-        pkgsUnstable.darkly-qt5
+        #pkgsUnstable.darkly-qt5
       ]
       ++ lib.optionals isGnome [
       ];

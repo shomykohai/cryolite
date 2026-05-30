@@ -18,6 +18,7 @@
       # Various stuff
       vesktop
       ghostty
+      android-tools
       # ayugram-desktop
       # kdePackages.qtstyleplugin-kvantum
       # kdePackages.qt6ct
@@ -51,7 +52,7 @@
 
     # support both 32-bit and 64-bit applications
     inherit
-      (pkgs.wineWowPackages)
+      (pkgs.wineWow64Packages)
       stable
       # wine-staging (version with experimental features)
       staging
@@ -60,7 +61,6 @@
       ;
 
     # support 64-bit only
-    wine64Override = pkgs.wine.override {wineBuild = "wine64";};
     bottlesOverride = pkgs.bottles.override {
       removeWarningPopup = true;
     };
@@ -107,9 +107,6 @@ in
 
     # Needed for GTK apps menubar
     # chaotic.appmenu-gtk3-module.enable = true;
-    # Needed by mtkclient since udev rules are following the adbusers group
-    # Also, adb stuff and android tools
-    programs.adb.enable = true;
     programs.wireshark = {
       enable = true;
       usbmon.enable = true;
