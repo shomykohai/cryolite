@@ -12,6 +12,7 @@
       bluez-qt
       kde-gtk-config
       krfb # KDE Remote Desktop
+      plasma-thunderbolt
       ;
 
     inherit
