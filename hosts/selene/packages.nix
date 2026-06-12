@@ -13,6 +13,9 @@
     pkgs.tio
     # MediaTek stuff!!
     frostix.antumbra
+
+    # SBC
+    pkgs.sbctl
   ];
 
   # Up to date packages

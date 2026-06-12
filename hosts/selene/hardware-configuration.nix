@@ -13,7 +13,18 @@
     ../../third-party/staypls.nix
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "pinctrl_meteorlake"
+    "intel_pmc_core"
+    "intel_lpss_pci"
+    "typec_ucsi"
+    "ucsi_acpi"
+    "thunderbolt"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = ["cryptd" "i915"];
   boot.initrd.systemd.tpm2.enable = true;
   security.tpm2.enable = true;
@@ -23,8 +34,17 @@
     "acpi_backlight=native"
   ];
 
+  boot.loader.limine.secureBoot.enable = true;
+  boot.loader.limine.validateChecksums = true;
+
+  services.fwupd.enable = true;
+  systemd.services.fwupd.serviceConfig.Environment = [
+    "FWUPD_EFIAPPDIR=/run/fwupd-efi"
+  ];
+
   services.thermald.enable = true;
   services.fprintd.enable = true;
+  services.hardware.bolt.enable = true;
 
   hardware.graphics = {
     enable = true;
@@ -55,8 +75,10 @@
       CPU_MIN_PERF_ON_BAT = 0;
       CPU_MAX_PERF_ON_BAT = 40;
 
-      START_CHARGE_THRESH_BAT0 = 40;
+      START_CHARGE_THRESH_BAT0 = 70;
       STOP_CHARGE_THRESH_BAT0 = 80;
+
+      PCIE_ASPM_ON_BAT = "default";
     };
   };
 
