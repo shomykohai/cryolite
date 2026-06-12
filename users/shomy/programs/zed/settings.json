@@ -1,4 +1,5 @@
 {
+  "cli_default_open_behavior": "new_window",
   "icon_theme": "Colored Zed Icons Theme Light",
   "auto_install_extensions": {
     "nix": true,
