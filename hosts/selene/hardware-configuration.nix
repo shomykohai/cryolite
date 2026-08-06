@@ -15,23 +15,26 @@
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
-    "pinctrl_meteorlake"
-    "intel_pmc_core"
-    "intel_lpss_pci"
-    "typec_ucsi"
-    "ucsi_acpi"
+    #"pinctrl_meteorlake"
+    #"intel_pmc_core"
+    #"intel_lpss_pci"
+    #"typec_ucsi"
+    #"ucsi_acpi"
     "thunderbolt"
     "nvme"
     "usb_storage"
     "sd_mod"
   ];
+  boot.blacklistedKernelModules = ["ucsi_acpi" "typec_ucsi"];
   boot.initrd.kernelModules = ["cryptd" "i915"];
   boot.initrd.systemd.tpm2.enable = true;
   security.tpm2.enable = true;
-  boot.kernelModules = ["kvm-intel" "acpi_call"];
-  boot.extraModulePackages = [config.boot.kernelPackages.acpi_call];
+  boot.kernelModules = ["kvm-intel"];
+  #boot.extraModulePackages = [config.boot.kernelPackages.acpi_call];
   boot.kernelParams = [
     "acpi_backlight=native"
+    #"acpi_osi=!"
+    #"acpi_osi=\"Windows 2022\""
   ];
 
   boot.loader.limine.secureBoot.enable = true;
