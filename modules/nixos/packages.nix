@@ -43,6 +43,8 @@
       binutils
       usbutils
       hyfetch
+      openssl
+      p7zip
       htop
       tree
       file
