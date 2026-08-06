@@ -127,6 +127,22 @@
         },
       },
     },
+    "basedpyright": {
+      "initialization_options": {
+        "python": {
+          "pythonPath": "/run/current-system/sw/bin/python",
+        },
+      },
+      "settings": {
+        "python": {
+          "analysis": {
+            "autoSearchPaths": true,
+            "useLibraryCodeForTypes": true,
+            "extraPaths": ["./venv/lib/python*/site-packages"],
+          },
+        },
+      },
+    },
     "rubocop": {
       "initialization_options": {
         "safeAutocorrect": false,
