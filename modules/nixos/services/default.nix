@@ -1,4 +1,4 @@
-{...}: {
+{pkgsUnstable, ...}: {
   imports = [
     ./binary-cache.nix
     ./syncthing.nix
@@ -7,6 +7,7 @@
   ];
 
   services.envfs.enable = true;
+  services.envfs.package = pkgsUnstable.envfs;
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.interval = "weekly";
 
