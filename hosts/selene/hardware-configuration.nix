@@ -45,6 +45,18 @@
     "FWUPD_EFIAPPDIR=/run/fwupd-efi"
   ];
 
+  # REMOVE AFTER https://github.com/NixOS/nixpkgs/pull/524756 gets merged
+  services.fwupd.package = pkgs.fwupd.overrideAttrs (old: {
+    postPatch =
+      (old.postPatch or "")
+      + ''
+        substituteInPlace meson.build \
+          --replace-fail \
+          "efi_app_location = join_paths(dependency('fwupd-efi').get_variable(pkgconfig: 'prefix'), 'libexec', 'fwupd', 'efi')" \
+          "efi_app_location = '/run/fwupd-efi'"
+      '';
+  });
+
   services.thermald.enable = true;
   services.fprintd.enable = true;
   services.hardware.bolt.enable = true;
