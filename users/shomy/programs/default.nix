@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgsUnstable,
   frostix,
   ...
 }: {
@@ -17,7 +18,7 @@
 
   users.users.shomy.packages = [
     pkgs.inkscape
-    pkgs.ayugram-desktop
+    pkgsUnstable.ayugram-desktop
     frostix.lkpatcher
   ];
 }
