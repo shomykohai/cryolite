@@ -24,10 +24,6 @@
       # kdePackages.qt6ct
       # System management
       btrfs-assistant
-      # support 32-bit only
-      wine
-      # support 64-bit only
-      wine64
       # winetricks (all versions)
       winetricks
       wineasio
@@ -45,7 +41,7 @@
       hyfetch
       openssl
       p7zip
-      htop
+      btop
       tree
       file
       wget
