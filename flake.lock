@@ -9,16 +9,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1779903930,
-        "narHash": "sha256-qG/vxOP5r7c4+7d4xo/xct9q6EvvG1KhIgKQtv0Jpag=",
+        "lastModified": 1787517743,
+        "narHash": "sha256-LPBlaI5gq0sF0weiok0Uw5RAHpLm5zD+1n1QqZX/btQ=",
         "owner": "ezKEa",
         "repo": "aagl-gtk-on-nix",
-        "rev": "f2ef82f7a42bc099e35eea0673d277348050c90c",
+        "rev": "c4ca8b7ad884d26db4aa1f8dc40953f14d5428f9",
         "type": "github"
       },
       "original": {
         "owner": "ezKEa",
-        "ref": "release-25.11",
+        "ref": "release-26.05",
         "repo": "aagl-gtk-on-nix",
         "type": "github"
       }
@@ -94,11 +94,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788082917,
-        "narHash": "sha256-r8cNyv0OqsrwEkZ4i80qDQDPSRGS3dGjHPbNgPl4m8I=",
+        "lastModified": 1788583176,
+        "narHash": "sha256-Q/7jVxOpD47bFup0DSu0VdThtMuSONwz1FzygZSjNe4=",
         "owner": "shomykohai",
         "repo": "frostix",
-        "rev": "ed07af40a7c01c388ae3422463c8c0c4ef86a3aa",
+        "rev": "d3bb7e948184607c152eb2caf30879d047742ef6",
         "type": "github"
       },
       "original": {
@@ -111,7 +111,7 @@
       "inputs": {
         "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1788033655,
@@ -130,16 +130,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1744536153,
-        "narHash": "sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg/N38=",
+        "lastModified": 1787994130,
+        "narHash": "sha256-fcaFTLuyHlYKRKBjZ2TKE9+aC8s05v+JjN1X7X/EQJY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "18dd725c29603f582cf1900e0d25f9f1063dbf11",
+        "rev": "413a9b88e4284b6f118f8e565b3442ade07336ae",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable-small",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -177,22 +177,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1787994130,
-        "narHash": "sha256-fcaFTLuyHlYKRKBjZ2TKE9+aC8s05v+JjN1X7X/EQJY=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "413a9b88e4284b6f118f8e565b3442ade07336ae",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable-small",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1787962033,
         "narHash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
         "owner": "nixos",
@@ -213,7 +197,7 @@
         "flake-compat": "flake-compat_2",
         "frostix": "frostix",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgsUnstable": "nixpkgsUnstable",
         "secrets-flake": "secrets-flake",
         "sops-nix": "sops-nix",
@@ -222,14 +206,17 @@
     },
     "rust-overlay": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "aagl",
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1778469574,
-        "narHash": "sha256-NTZzJ7xJvMXOonYqut3WLUhryeZj5QuuL0ANcqS7d30=",
+        "lastModified": 1785907205,
+        "narHash": "sha256-Ds1vTi53af4wDMAveSR/K0JnywDslLwmgwhVIiwnNmY=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "4852a8aa041c94af55e136cde5b8b6d42c3563e8",
+        "rev": "c5cb13481d718fac906aa9cfd85f9b60e1a546cb",
         "type": "github"
       },
       "original": {
@@ -246,11 +233,11 @@
         "rev": "4c3106edce980cef72dbc9ed5814d078f39d9487",
         "revCount": 11,
         "type": "git",
-        "url": "ssh://forgejo@git.kaerulabs.com/shomy/cryolite-secrets.git"
+        "url": "ssh://git@git.kaerulabs.com/shomy/cryolite-secrets.git"
       },
       "original": {
         "type": "git",
-        "url": "ssh://forgejo@git.kaerulabs.com/shomy/cryolite-secrets.git"
+        "url": "ssh://git@git.kaerulabs.com/shomy/cryolite-secrets.git"
       }
     },
     "sops-nix": {

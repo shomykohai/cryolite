@@ -37,11 +37,17 @@
         ];
       };
   in {
-    nixosConfigurations = {
-      temporalcatalyst = mkSystem "temporalcatalyst" "x86_64-linux";
-      chronoshaven = mkSystem "chronoshaven" "x86_64-linux";
-      selene = mkSystem "selene" "x86_64-linux";
-    };
+    nixosConfigurations = let
+      mk = hostName: arch: let
+        base = mkSystem hostName arch;
+      in {
+        "${hostName}" = base;
+        "${hostName}-ci" = base.extendModules {modules = [./modules/nixos/ci.nix];};
+      };
+    in
+      mk "temporalcatalyst" "x86_64-linux"
+      // mk "chronoshaven" "x86_64-linux"
+      // mk "selene" "x86_64-linux";
   };
 
   inputs = {
@@ -58,7 +64,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    secrets-flake.url = "git+ssh://forgejo@git.kaerulabs.com/shomy/cryolite-secrets.git";
+    secrets-flake.url = "git+ssh://git@git.kaerulabs.com/shomy/cryolite-secrets.git";
 
     # Third party repos
     frostix = {
@@ -71,7 +77,7 @@
     };
 
     aagl = {
-      url = "github:ezKEa/aagl-gtk-on-nix/release-25.11";
+      url = "github:ezKEa/aagl-gtk-on-nix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

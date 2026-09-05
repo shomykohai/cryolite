@@ -1,0 +1,72 @@
+name: Build systems
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LANTIAN_SUBSTITUTER: https://attic.xuyh0120.win/lantian
+  LANTIAN_KEY: lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
+  SUNRISE_ENDPOINT: https://attic.services.itssho.my
+  SUNSET_ENDPOINT: https://attic.services.itssho.my
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - selene
+          - temporalcatalyst
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: false
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            accept-flake-config = true
+            access-tokens = github.com=${{ secrets.GH_PAT }}
+            extra-substituters = ${{ env.LANTIAN_SUBSTITUTER }}
+            extra-trusted-public-keys = ${{ env.LANTIAN_KEY }}
+            max-jobs = 2
+            cores = 2
+
+      - name: Set up sunrise cache
+        uses: ryanccn/attic-action@v0
+        with:
+          endpoint: ${{ env.SUNRISE_ENDPOINT }}
+          cache: sunrise
+          token: ${{ secrets.SUNRISE_TOKEN }}
+          skip-push: true
+
+      - name: Build ${{ matrix.host }}
+        run: |
+          nix build --print-build-logs --no-write-lock-file \
+            --override-input secrets-flake ./ci/secrets \
+            ".#nixosConfigurations.${{ matrix.host }}-ci.config.system.build.toplevel" \
+            --out-link result
+
+      - name: Push to sunset
+        if: success()
+        env:
+          SUNSET_TOKEN: ${{ secrets.SUNSET_TOKEN }}
+        run: |
+          nix shell nixpkgs#attic-client --command \
+            attic login sunset "$SUNSET_ENDPOINT" "$SUNSET_TOKEN"
+          nix shell nixpkgs#attic-client --command \
+            attic push sunset ./result
