@@ -38,7 +38,7 @@ jobs:
         uses: https://github.com/cachix/install-nix-action@v31
         with:
           extra_nix_config: |
-            experimental-features = nix-command flakes
+            experimental-features = nix-command flakes pipe-operators
             accept-flake-config = true
             access-tokens = github.com=${{ secrets.GH_PAT }}
             extra-substituters = ${{ env.LANTIAN_SUBSTITUTER }}
