@@ -1,3 +1,3 @@
 [submodule "secrets"]
 	path = secrets
-	url = forgejo@git.kaerulabs.com/shomy/cryolite-secrets
+	url = git@git.kaerulabs.com/shomy/cryolite-secrets
