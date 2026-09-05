@@ -117,6 +117,8 @@
     keyboard.useCustomLayout = true;
 
     systemd.services.NetworkManager-wait-online.enable = false;
+    # Auto upgrade service needs to wait for network to be online, otherwise it will fail.
+    systemd.services.nixos-upgrade.serviceConfig.ExecStartPre = "${pkgs.networkmanager}/bin/nm-online -q -t 180";
     documentation.man.enable = false;
     documentation.enable = false;
 
