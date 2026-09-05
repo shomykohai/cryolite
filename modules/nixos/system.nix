@@ -33,15 +33,15 @@
       optimise.automatic = true;
       gc.automatic = false;
 
-      daemonCPUSchedPolicy = "idle";
-      daemonIOSchedClass = "idle";
+      daemonCPUSchedPolicy = "other";
+      daemonIOSchedClass = "best-effort";
 
       settings = {
         max-jobs = "auto";
-        cores = 0;
+        cores = 4;
         max-substitution-jobs = 32;
         eval-cache = true;
-        auto-optimise-store = true;
+        auto-optimise-store = false; # Nothing to optimise anyway apparently after testing.
         keep-going = true;
         builders-use-substitutes = true;
         allowed-users = ["@wheel"];

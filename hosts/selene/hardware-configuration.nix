@@ -45,18 +45,6 @@
     "FWUPD_EFIAPPDIR=/run/fwupd-efi"
   ];
 
-  # REMOVE AFTER https://github.com/NixOS/nixpkgs/pull/524756 gets merged
-  services.fwupd.package = pkgs.fwupd.overrideAttrs (old: {
-    postPatch =
-      (old.postPatch or "")
-      + ''
-        substituteInPlace meson.build \
-          --replace-fail \
-          "efi_app_location = join_paths(dependency('fwupd-efi').get_variable(pkgconfig: 'prefix'), 'libexec', 'fwupd', 'efi')" \
-          "efi_app_location = '/run/fwupd-efi'"
-      '';
-  });
-
   services.thermald.enable = true;
   services.fprintd.enable = true;
   services.hardware.bolt.enable = true;
@@ -88,7 +76,7 @@
       CPU_MIN_PERF_ON_AC = 0;
       CPU_MAX_PERF_ON_AC = 100;
       CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 40;
+      CPU_MAX_PERF_ON_BAT = 60;
 
       START_CHARGE_THRESH_BAT0 = 70;
       STOP_CHARGE_THRESH_BAT0 = 80;
@@ -148,27 +136,27 @@
     neededForBoot = true;
     device = "/dev/mapper/nix";
     fsType = "btrfs";
-    options = ["noatime" "discard" "subvol=@nix" "compress=zstd" "x-gvfs-hide"];
+    options = ["noatime" "discard=async" "subvol=@nix" "compress=zstd" "x-gvfs-hide"];
   };
 
   fileSystems."/persist" = {
     neededForBoot = true;
     device = "/dev/mapper/nix";
     fsType = "btrfs";
-    options = ["noatime" "discard" "subvol=@persist" "compress=zstd" "x-gvfs-hide"];
+    options = ["noatime" "discard=async" "subvol=@persist" "compress=zstd" "x-gvfs-hide"];
   };
 
   fileSystems."/var/tmp" = {
     device = "/dev/mapper/nix";
     fsType = "btrfs";
-    options = ["noatime" "discard" "subvol=@tmp" "x-gvfs-hide"];
+    options = ["noatime" "discard=async" "subvol=@tmp" "x-gvfs-hide"];
   };
 
   fileSystems."/home" = {
     neededForBoot = true;
     device = "/dev/mapper/home";
     fsType = "btrfs";
-    options = ["noatime" "discard" "subvol=@home" "compress=zstd" "x-gvfs-hide"];
+    options = ["noatime" "discard=async" "subvol=@home" "compress=zstd" "x-gvfs-hide"];
   };
 
   fileSystems."/etc/cryolite" = {
@@ -186,7 +174,7 @@
   fileSystems."/mnt/workspace" = {
     device = "/dev/mapper/workspace";
     fsType = "btrfs";
-    options = ["noatime" "discard" "subvol=@workspace" "compress=zstd" "x-gvfs-hide"];
+    options = ["noatime" "discard=async" "subvol=@workspace" "compress=zstd" "x-gvfs-hide"];
   };
 
   swapDevices = [
