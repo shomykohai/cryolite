@@ -23,7 +23,7 @@
         then builtins.head (builtins.attrValues value)
         else if value != null
         then builtins.toString value
-        else ""
+        else "MISSING-SECRET-${builtins.replaceStrings ["."] ["-"] secretPath}"
     );
 in {
   options = {
