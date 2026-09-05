@@ -13,13 +13,12 @@ concurrency:
 env:
   LANTIAN_SUBSTITUTER: https://attic.xuyh0120.win/lantian
   LANTIAN_KEY: lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
-  SUNRISE_ENDPOINT: https://attic.services.itssho.my
-  SUNSET_ENDPOINT: https://attic.services.itssho.my
+  ATTIC_ENDPOINT: https://attic.services.itssho.my
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 170
 
     strategy:
       fail-fast: false
@@ -41,22 +40,34 @@ jobs:
             experimental-features = nix-command flakes pipe-operators
             accept-flake-config = true
             access-tokens = github.com=${{ secrets.GH_PAT }}
-            extra-substituters = ${{ env.LANTIAN_SUBSTITUTER }}
-            extra-trusted-public-keys = ${{ env.LANTIAN_KEY }}
             max-jobs = 2
             cores = 2
 
-      - name: Set up sunrise cache
-        uses: https://github.com/ryanccn/attic-action@v0
-        with:
-          endpoint: ${{ env.SUNRISE_ENDPOINT }}
-          cache: sunrise
-          token: ${{ secrets.SUNRISE_TOKEN }}
-          skip-push: true
+      - name: Configure binary caches
+        env:
+          SUNSET_TOKEN: ${{ secrets.SUNSET_TOKEN }}
+        run: |
+          nix shell nixpkgs#attic-client --command bash -euo pipefail -c '
+            attic login solstice "$ATTIC_ENDPOINT" "$SUNSET_TOKEN"
+            attic use solstice:sunrise
+            attic use solstice:sunset
+          '
+          mkdir -p ~/.config/nix
+          printf '\nextra-substituters = %s\nextra-trusted-public-keys = %s\n' \
+            "$LANTIAN_SUBSTITUTER" "$LANTIAN_KEY" >> ~/.config/nix/nix.conf
+
+          nix config show | grep -E '^(substituters|trusted-public-keys|netrc-file) '
+          test -r "$(nix config show netrc-file)" || { echo "netrc-file unreadable"; exit 1; }
 
       - name: Build ${{ matrix.host }}
+        env:
+          SUNSET_TOKEN: ${{ secrets.SUNSET_TOKEN }}
         run: |
           nix build --print-build-logs --no-write-lock-file \
+            --option sandbox true \
+            --option sandbox-fallback false \
+            --option substitute true \
+            --option fallback true \
             --override-input secrets-flake ./ci/secrets \
             ".#nixosConfigurations.${{ matrix.host }}-ci.config.system.build.toplevel" \
             --out-link result
@@ -67,6 +78,4 @@ jobs:
           SUNSET_TOKEN: ${{ secrets.SUNSET_TOKEN }}
         run: |
           nix shell nixpkgs#attic-client --command \
-            attic login sunset "$SUNSET_ENDPOINT" "$SUNSET_TOKEN"
-          nix shell nixpkgs#attic-client --command \
-            attic push sunset ./result
+            attic push solstice:sunset ./result
