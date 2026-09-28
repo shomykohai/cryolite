@@ -45,6 +45,7 @@
       tree
       file
       wget
+      xxd
       jq
       ;
 
