@@ -11,8 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LANTIAN_SUBSTITUTER: https://attic.xuyh0120.win/lantian
-  LANTIAN_KEY: lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
   ATTIC_ENDPOINT: https://attic.services.itssho.my
 
 jobs:
@@ -53,8 +51,6 @@ jobs:
             attic use solstice:sunset
           '
           mkdir -p ~/.config/nix
-          printf '\nextra-substituters = %s\nextra-trusted-public-keys = %s\n' \
-            "$LANTIAN_SUBSTITUTER" "$LANTIAN_KEY" >> ~/.config/nix/nix.conf
 
           nix config show | grep -E '^(substituters|trusted-public-keys|netrc-file) '
           test -r "$(nix config show netrc-file)" || { echo "netrc-file unreadable"; exit 1; }

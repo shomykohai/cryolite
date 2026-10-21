@@ -26,8 +26,8 @@
     memoryPercent = 50; # 8GB
   };
 
-  nix.settings.substituters = ["https://cache.garnix.io" "https://attic.xuyh0120.win/lantian"];
-  nix.settings.trusted-public-keys = ["cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
+  nix.settings.substituters = ["https://cache.garnix.io"];
+  nix.settings.trusted-public-keys = ["cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="];
 
   system.desktopEnvironment = "KDE";
   games.genshin-impact.enable = true;
