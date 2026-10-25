@@ -59,7 +59,9 @@ OUT_LINK="$tmpdir/system"
 nix --extra-experimental-features 'nix-command flakes pipe-operators' \
     build ".#nixosConfigurations.${HOST_NAME}.config.system.build.toplevel" \
     --store "$MOUNT_POINT" --out-link "$OUT_LINK" --no-update-lock-file \
-    --override-input secrets-flake ./secrets
+    --override-input secrets-flake ./secrets \
+    --option extra-substituters https://cache.lantian.pub/lantian \
+    --option extra-trusted-public-keys lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ=
 
 SYSTEM_PATH=$(readlink -f "$OUT_LINK")
 
